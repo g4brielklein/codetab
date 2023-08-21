@@ -5,7 +5,7 @@ function Home() {
 
     return (
         <>
-            <h1>{technologies}</h1>
+            <h1>Retornando uma frase teste - testando os deploys da Vercel</h1>
         </>
     )
 }

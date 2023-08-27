@@ -4,7 +4,9 @@
   "description": "Implementação de uma aplicação para conteúdos e notícias de tecnologia. Projeto criado de ponta a ponta para aprender na prática mais sobre tecnologias como NodeJS, React, Next, PostgreSQL e Redis.",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "lint:check": "prettier --check .",
+    "lint:fix": "prettier --write ."
   },
   "author": "gabrielklein",
   "license": "MIT",
@@ -12,5 +14,8 @@
     "next": "^13.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.2"
   }
 }

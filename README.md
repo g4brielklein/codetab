@@ -1,3 +1,3 @@
 # tabnews
 
-Implementação de uma aplicação para conteúdos e notícias de tecnologia. Projeto criado de ponta a ponta para aprender na prática mais sobre tecnologias como NodeJS, React, Next, PostgreSQL e Redis.
+Implementation of an web app for content about tech and coding. Project created to learn more and practice techs such as NodeJS, React, Next, PostgreSQL and Redis.

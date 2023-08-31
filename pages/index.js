@@ -1,10 +1,12 @@
+import Head from 'next/head'
+
 function Home() {
   return (
     <>
+      <Head>
+        <title>Gabriel Klein</title>
+      </Head>
       <div className="container">
-        <Head>
-          <link rel="shorcut icon" href="/favicon.ico" />
-        </Head>
         <h1>Under construction... 🚧</h1>
         <p>github.com/g4brielklein</p>
       </div>

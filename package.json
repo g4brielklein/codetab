@@ -1,7 +1,7 @@
 {
-  "name": "tabnews",
+  "name": "codetab",
   "version": "1.0.0",
-  "description": "Implementação de uma aplicação para conteúdos e notícias de tecnologia. Projeto criado de ponta a ponta para aprender na prática mais sobre tecnologias como NodeJS, React, Next, PostgreSQL e Redis.",
+  "description": "Implementation of an web app for content about tech and coding. Project created to learn more and practice techs such as NodeJS, React, Next, PostgreSQL and Redis.",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",

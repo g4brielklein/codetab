@@ -19,3 +19,18 @@ test("Should return error if try to sum '100' + 100", () => {
   const result = calculator.sum("100", 100);
   expect(result).toBe("Error");
 });
+
+test("Should return error if try to sum 100 + '100'", () => {
+  const result = calculator.sum(100, "100");
+  expect(result).toBe("Error");
+});
+
+test("Should return error if none of the numbers were not passed", () => {
+  const result = calculator.sum();
+  expect(result).toBe("Error");
+});
+
+test("Should not divide a number by zero", () => {
+  const result = calculator.divide(5, 0);
+  expect(result).toBe("Error, not possible divide by 0");
+});

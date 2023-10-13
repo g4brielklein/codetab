@@ -4,7 +4,7 @@
   "description": "Implementation of an web app for content about tech and coding. Project created to learn more and practice techs such as NodeJS, React, Next, PostgreSQL and Redis.",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "docker compose -f infra/compose.yaml up -d && next dev",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
     "test": "jest",

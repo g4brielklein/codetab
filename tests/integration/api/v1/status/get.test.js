@@ -19,7 +19,7 @@ test("Status info should be returned and valid from status page", async () => {
   expect(max_connections).toBeGreaterThan(0);
 
   expect(opened_connections).toBeDefined();
-  expect(opened_connections).toBeGreaterThan(-1);
+  expect(opened_connections).toBe(1);
 
   expect(version).toBeDefined();
   expect(parseInt(version)).toBeGreaterThan(0);

@@ -12,7 +12,7 @@ async function status(request, response) {
   );
 
   const postgresVersion = await database.query(
-    "SELECT split_part(version(), ' ', 2) AS version",
+    "SELECT split_part(version(), ' ', 2) AS version;",
   );
 
   response.status(200).json({

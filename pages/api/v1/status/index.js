@@ -3,8 +3,10 @@ import database from "infra/database.js";
 async function status(request, response) {
   const updatedAt = new Date().toISOString();
 
+  const databaseName = request.query.databaseName;
+
   const currentConnections = await database.query(
-    "SELECT sum(numbackends) AS total FROM pg_stat_database;",
+    `SELECT count(*)::int FROM pg_stat_activity WHERE datname = '${databaseName}';`,
   );
 
   const maxConnections = await database.query("SHOW max_connections;");
@@ -16,7 +18,7 @@ async function status(request, response) {
     dependencies: {
       database: {
         max_connections: parseInt(maxConnections.rows[0].max_connections),
-        opened_connections: parseInt(currentConnections.rows[0].total),
+        opened_connections: currentConnections.rows[0].count,
         version: postgresVersion.rows[0].server_version,
       },
     },

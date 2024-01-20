@@ -7,21 +7,17 @@ async function status(request, response) {
     "SELECT sum(numbackends) AS total FROM pg_stat_database;",
   );
 
-  const maxConnections = await database.query(
-    "SELECT * FROM pg_settings WHERE name = 'max_connections';",
-  );
+  const maxConnections = await database.query("SHOW max_connections;");
 
-  const postgresVersion = await database.query(
-    "SELECT split_part(version(), ' ', 2) AS version;",
-  );
+  const postgresVersion = await database.query("SHOW server_version;");
 
   response.status(200).json({
     updated_at: updatedAt,
     dependencies: {
       database: {
-        max_connections: parseInt(maxConnections.rows[0].setting),
+        max_connections: parseInt(maxConnections.rows[0].max_connections),
         opened_connections: parseInt(currentConnections.rows[0].total),
-        version: postgresVersion.rows[0].version,
+        version: postgresVersion.rows[0].server_version,
       },
     },
   });

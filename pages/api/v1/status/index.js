@@ -5,9 +5,10 @@ async function status(request, response) {
 
   const databaseName = request.query.databaseName;
 
-  const currentConnections = await database.query(
-    `SELECT count(*)::int FROM pg_stat_activity WHERE datname = '${databaseName}';`,
-  );
+  const currentConnections = await database.query({
+    text: "SELECT count(*)::int FROM pg_stat_activity WHERE datname = $1;",
+    values: [databaseName],
+  });
 
   const maxConnections = await database.query("SHOW max_connections;");
 

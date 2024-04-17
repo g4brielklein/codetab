@@ -11,7 +11,7 @@
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
     "test": "NODE_ENV=development jest --runInBand",
-    "test:watch": "jest --watchAll --runInBand",
+    "test:watch": "NODE_ENV=development jest --watchAll --runInBand",
     "migration:create": "node-pg-migrate -m infra/migrations create",
     "migrations:up": "node-pg-migrate -m infra/migrations --envPath .env.development up"
   },

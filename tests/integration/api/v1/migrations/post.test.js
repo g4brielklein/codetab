@@ -11,12 +11,23 @@ async function cleanDB() {
 }
 
 test("Should run migrations on live run", async () => {
-  const response = await fetch("http://localhost:3000/api/v1/migrations", {
-    method: "POST",
-  });
-  expect(response.status).toBe(200);
+  const responseFirstPost = await fetch(
+    "http://localhost:3000/api/v1/migrations",
+    {
+      method: "POST",
+    },
+  );
 
-  const getResponse = await fetch("http://localhost:3000/api/v1/migrations");
-  const getResponseJson = await getResponse.json();
-  expect(getResponseJson.pendingMigrations.length).toBe(0);
+  const responseFirstPostJson = await responseFirstPost.json();
+  expect(responseFirstPostJson.pendingMigrations.length).toBeGreaterThan(0);
+
+  const responseSecondPost = await fetch(
+    "http://localhost:3000/api/v1/migrations",
+    {
+      method: "POST",
+    },
+  );
+
+  const responseSecondPostJson = await responseSecondPost.json();
+  expect(responseSecondPostJson.pendingMigrations.length).toBe(0);
 });

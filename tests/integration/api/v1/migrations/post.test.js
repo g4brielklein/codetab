@@ -19,7 +19,8 @@ test("Should run migrations on live run", async () => {
   );
 
   const responseFirstPostJson = await responseFirstPost.json();
-  expect(responseFirstPostJson.pendingMigrations.length).toBeGreaterThan(0);
+  expect(responseFirstPost.status).toBe(201);
+  expect(responseFirstPostJson.runnedMigrations.length).toBeGreaterThan(0);
 
   const responseSecondPost = await fetch(
     "http://localhost:3000/api/v1/migrations",
@@ -29,5 +30,6 @@ test("Should run migrations on live run", async () => {
   );
 
   const responseSecondPostJson = await responseSecondPost.json();
-  expect(responseSecondPostJson.pendingMigrations.length).toBe(0);
+  expect(responseSecondPost.status).toBe(200);
+  expect(responseSecondPostJson.runnedMigrations.length).toBe(0);
 });

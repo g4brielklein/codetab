@@ -16,5 +16,6 @@ test("Should run migrations on dry run", async () => {
 
   const responseBody = await response.json();
   expect(Array.isArray(responseBody.pendingMigrations)).toBe(true);
+  expect(response.status).toBe(200);
   expect(responseBody.pendingMigrations.length).toBeGreaterThan(0);
 });

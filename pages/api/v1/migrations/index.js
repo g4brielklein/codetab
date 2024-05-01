@@ -8,7 +8,7 @@ export default async function migrations(request, response) {
 
   if (method !== "POST" && method !== "GET") {
     return response
-      .status(403)
+      .status(405)
       .send({ ERROR: `Method ${method} not allowed on this endpoint` });
   }
 

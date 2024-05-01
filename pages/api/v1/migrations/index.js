@@ -6,11 +6,11 @@ export default async function migrations(request, response) {
   const method = request.method;
   let status = 200;
 
-  // if (method !== "POST" && method !== "GET") {
-  //   return response
-  //     .status(405)
-  //     .send({ ERROR: `Method ${method} is not allowed on this endpoint` });
-  // }
+  if (method !== "POST" && method !== "GET") {
+    return response
+      .status(405)
+      .send({ ERROR: `Method ${method} is not allowed on this endpoint` });
+  }
 
   const defaultMigrationOptions = {
     dbClient: await database.getConnectedClient(),
@@ -37,16 +37,12 @@ export default async function migrations(request, response) {
     });
   }
 
-  if (method == "GET") {
-    const pendingMigrations = await nodePgMigrate(defaultMigrationOptions);
-    await database.endClientConnection(defaultMigrationOptions.dbClient); // close pg-migrate client connection
+  const pendingMigrations = await nodePgMigrate(defaultMigrationOptions);
+  await database.endClientConnection(defaultMigrationOptions.dbClient); // close pg-migrate client connection
 
-    return response.status(status).send({
-      pendingMigrations: pendingMigrations.map(
-        (pendingMigration) => pendingMigration.name,
-      ),
-    });
-  }
-
-  return response.status(405).end();
+  return response.status(status).send({
+    pendingMigrations: pendingMigrations.map(
+      (pendingMigration) => pendingMigration.name,
+    ),
+  });
 }

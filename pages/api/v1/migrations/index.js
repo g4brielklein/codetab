@@ -9,7 +9,7 @@ export default async function migrations(request, response) {
   if (method !== "POST" && method !== "GET") {
     return response
       .status(405)
-      .send({ ERROR: `Method ${method} not allowed on this endpoint` });
+      .send({ ERROR: `Method ${method} is not allowed on this endpoint` });
   }
 
   const defaultMigrationOptions = {

@@ -5,6 +5,7 @@ import database from "infra/database.js";
 export default async function migrations(request, response) {
   const method = request.method;
   let status = 200;
+  const dbClient = null;
 
   if (method !== "POST" && method !== "GET") {
     return response
@@ -13,8 +14,10 @@ export default async function migrations(request, response) {
   }
 
   try {
+    dbClient = await database.getConnectedClient();
+
     const defaultMigrationOptions = {
-      dbClient: await database.getConnectedClient(),
+      dbClient,
       dir: join("infra", "migrations"),
       migrationsTable: "pgmigrations",
       direction: "up",
@@ -48,7 +51,7 @@ export default async function migrations(request, response) {
     console.error(err);
     throw err;
   } finally {
-    await database.endClientConnection(defaultMigrationOptions.dbClient); // close pg-migrate client connection
+    await database.endClientConnection(dbClient); // close pg-migrate client connection
     return;
   }
 }

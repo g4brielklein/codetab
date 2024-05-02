@@ -12,37 +12,43 @@ export default async function migrations(request, response) {
       .send({ ERROR: `Method ${method} is not allowed on this endpoint` });
   }
 
-  const defaultMigrationOptions = {
-    dbClient: await database.getConnectedClient(),
-    dir: join("infra", "migrations"),
-    migrationsTable: "pgmigrations",
-    direction: "up",
-    dryRun: true,
-    verbose: true,
-  };
+  try {
+    const defaultMigrationOptions = {
+      dbClient: await database.getConnectedClient(),
+      dir: join("infra", "migrations"),
+      migrationsTable: "pgmigrations",
+      direction: "up",
+      dryRun: true,
+      verbose: true,
+    };
 
-  if (method === "POST") {
-    const runnedMigrations = await nodePgMigrate({
-      ...defaultMigrationOptions,
-      dryRun: false,
-    });
-    await database.endClientConnection(defaultMigrationOptions.dbClient); // close pg-migrate client connection
+    if (method === "POST") {
+      const runnedMigrations = await nodePgMigrate({
+        ...defaultMigrationOptions,
+        dryRun: false,
+      });
 
-    status = runnedMigrations.length >= 1 ? (status = 201) : status;
+      status = runnedMigrations.length >= 1 ? (status = 201) : status;
+
+      return response.status(status).send({
+        runnedMigrations: runnedMigrations.map(
+          (runnedMigration) => runnedMigration.name,
+        ),
+      });
+    }
+
+    const pendingMigrations = await nodePgMigrate(defaultMigrationOptions);
 
     return response.status(status).send({
-      runnedMigrations: runnedMigrations.map(
-        (runnedMigration) => runnedMigration.name,
+      pendingMigrations: pendingMigrations.map(
+        (pendingMigration) => pendingMigration.name,
       ),
     });
+  } catch (err) {
+    console.error(err);
+    throw err;
+  } finally {
+    await database.endClientConnection(defaultMigrationOptions.dbClient); // close pg-migrate client connection
+    return;
   }
-
-  const pendingMigrations = await nodePgMigrate(defaultMigrationOptions);
-  await database.endClientConnection(defaultMigrationOptions.dbClient); // close pg-migrate client connection
-
-  return response.status(status).send({
-    pendingMigrations: pendingMigrations.map(
-      (pendingMigration) => pendingMigration.name,
-    ),
-  });
 }

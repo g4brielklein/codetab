@@ -5,7 +5,7 @@ import database from "infra/database.js";
 export default async function migrations(request, response) {
   const method = request.method;
   let status = 200;
-  const dbClient = null;
+  let dbClient = null;
 
   if (method !== "POST" && method !== "GET") {
     return response

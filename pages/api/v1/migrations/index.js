@@ -52,6 +52,5 @@ export default async function migrations(request, response) {
     throw err;
   } finally {
     await database.endClientConnection(dbClient); // close pg-migrate client connection
-    return;
   }
 }

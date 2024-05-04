@@ -10,16 +10,16 @@ const clientOptions = {
 };
 
 async function query(queryObject) {
-  const client = new Client(clientOptions);
+  let client = {};
 
   try {
-    await client.connect();
+    client = await getConnectedClient(clientOptions);
     return await client.query(queryObject);
   } catch (err) {
     console.error(err);
     throw err;
   } finally {
-    await client.end();
+    await endClientConnection(client);
   }
 }
 
@@ -30,7 +30,7 @@ async function getConnectedClient() {
     await client.connect();
     return client;
   } catch (err) {
-    client.end();
+    await endClientConnection(client);
     throw err;
   }
 }

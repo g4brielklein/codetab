@@ -10,7 +10,7 @@
     "services:down": "docker compose -f infra/compose.yaml down",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
-    "test": "npm run services:up && npm run check-db-ready && npm run migrations:up && concurrently --names next,jest --hide next --kill-others --success command-jest 'next dev' 'NODE_ENV=development jest --runInBand'",
+    "test": "npm run services:up && concurrently --names next,jest --hide next --kill-others --success command-jest 'next dev' 'NODE_ENV=development jest --runInBand --verbose'",
     "test:watch": "NODE_ENV=development jest --watchAll --runInBand",
     "migration:create": "node-pg-migrate -m infra/migrations create",
     "migrations:up": "node-pg-migrate -m infra/migrations --envPath .env.development up",

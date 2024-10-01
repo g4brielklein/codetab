@@ -49,8 +49,10 @@ function getSSLConfigs() {
   return process.env.NODE_ENV !== "development";
 }
 
-export default {
+const database = {
   query,
   getConnectedClient,
   endClientConnection,
 };
+
+export default database;

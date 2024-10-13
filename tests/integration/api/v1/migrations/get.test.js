@@ -10,8 +10,6 @@ async function cleanDB() {
   await database.query(`
     DROP SCHEMA public cascade; CREATE SCHEMA public;
   `);
-
-  console.log("Database cleaned for tests");
 }
 
 test("Should run migrations on dry run", async () => {

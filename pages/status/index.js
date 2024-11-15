@@ -1,5 +1,7 @@
+import { CapsLock } from "../components/CapsLock";
+
 function Status() {
-  return <h1>Status page from Codetab</h1>;
+  return <CapsLock text="Status page from Codetab" />;
 }
 
 export default Status;

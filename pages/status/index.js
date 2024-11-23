@@ -1,5 +1,7 @@
 import useSWR from "swr";
 
+import style from "./status.module.css";
+
 function Status() {
   const { data, error, isLoading } = useSWR("/api/v1/status", fetcher, {
     refreshInterval: 2000,
@@ -19,24 +21,24 @@ function Status() {
   }
 
   return (
-    <div>
-      <div>
+    <div className={style.statusPage}>
+      <div className={style.status}>
         <h1>Status page</h1>
 
-        <div>
+        <div className={style.statusGroup}>
           <h2>Database status</h2>
 
-          <div>
+          <div className={style.statusItem}>
             <p>Max connections:</p>
             <span>{data.dependencies.database.max_connections}</span>
           </div>
 
-          <div>
+          <div className={style.statusItem}>
             <p>Opened connections:</p>
             <span>{data.dependencies.database.opened_connections}</span>
           </div>
 
-          <div>
+          <div className={style.statusItem}>
             <p>Postgres Version</p>
             <span>{data.dependencies.database.version}</span>
           </div>

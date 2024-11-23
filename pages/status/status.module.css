@@ -1,0 +1,48 @@
+.statusPage * {
+  margin: 0;
+}
+
+.statusPage {
+  display: flex;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+  max-width: 60rem;
+  text-align: start;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-size: 1rem;
+}
+
+.status h1 {
+  margin-bottom: 1rem;
+}
+
+.statusGroup {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.25rem;
+  font-size: 1rem;
+}
+
+.statusGroup h2 {
+  margin: 1rem 0;
+}
+
+.statusItem {
+  display: flex;
+  flex-direction: row;
+  line-height: 1.6;
+  gap: 0.5rem;
+}
+
+.statusItem > span {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  border-radius: 12px;
+  padding: 0 4px;
+}

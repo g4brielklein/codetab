@@ -2,7 +2,7 @@ import useSWR from "swr";
 
 function Status() {
   const { data, error, isLoading } = useSWR("/api/v1/status", fetcher, {
-    refreshInterval: 60000,
+    refreshInterval: 2000,
   });
 
   async function fetcher(key) {
@@ -18,7 +18,32 @@ function Status() {
     return <h2>Loading data...</h2>;
   }
 
-  return <pre>{JSON.stringify(data, null, 2)}</pre>;
+  return (
+    <div>
+      <div>
+        <h1>Status page</h1>
+
+        <div>
+          <h2>Database status</h2>
+
+          <div>
+            <p>Max connections:</p>
+            <span>{data.dependencies.database.max_connections}</span>
+          </div>
+
+          <div>
+            <p>Opened connections:</p>
+            <span>{data.dependencies.database.opened_connections}</span>
+          </div>
+
+          <div>
+            <p>Postgres Version</p>
+            <span>{data.dependencies.database.version}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Status;

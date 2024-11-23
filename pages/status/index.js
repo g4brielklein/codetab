@@ -49,7 +49,7 @@ function Status() {
           </div>
 
           <div className={style.statusItem}>
-            <p>Postgres Version</p>
+            <p>Postgres version</p>
             <span>{data.dependencies.database.version}</span>
           </div>
         </div>

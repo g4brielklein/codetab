@@ -1,5 +1,7 @@
 import useSWR from "swr";
 
+import { UpdatedAt } from "../components/UpdatedAt";
+
 import style from "./status.module.css";
 
 function Status() {
@@ -44,6 +46,8 @@ function Status() {
           </div>
         </div>
       </div>
+
+      <UpdatedAt date={data.updated_at} />
     </div>
   );
 }

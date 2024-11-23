@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-import { UpdatedAt } from "../components/UpdatedAt";
+import UpdatedAt from "../components/UpdatedAt";
 
 import style from "./status.module.css";
 
@@ -15,11 +15,19 @@ function Status() {
   }
 
   if (error) {
-    return <h2>{error}</h2>;
+    return (
+      <div className={style.statusPage}>
+        <h2>Error while getting status</h2>
+      </div>
+    );
   }
 
   if (isLoading) {
-    return <h2>Loading data...</h2>;
+    return (
+      <div className={style.statusPage}>
+        <h2>Loading data...</h2>
+      </div>
+    );
   }
 
   return (

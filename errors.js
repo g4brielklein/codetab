@@ -9,13 +9,13 @@ class ValidationError extends Error {
 function saveUser(user) {
   if (!user) {
     throw new ValidationError("Param user is missing", {
-      statusCode: 500
-    })
+      statusCode: 500,
+    });
   }
 }
 
 try {
-  saveUser()
-} catch(err) {
-  console.error(err)
+  saveUser();
+} catch (err) {
+  console.error(err);
 }

@@ -36,7 +36,9 @@ async function getConnectedClient() {
 }
 
 async function endClientConnection(client) {
-  await client.end();
+  if (client.length) {
+    await client.end();
+  }
 }
 
 function getSSLConfigs() {

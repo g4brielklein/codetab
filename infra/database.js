@@ -10,7 +10,7 @@ const clientOptions = {
 };
 
 async function query(queryObject) {
-  let client = {};
+  let client;
 
   try {
     client = await getConnectedClient(clientOptions);
@@ -24,9 +24,10 @@ async function query(queryObject) {
 }
 
 async function getConnectedClient() {
-  const client = new Client(clientOptions);
+  let client;
 
   try {
+    client = new Client(clientOptions);
     await client.connect();
     return client;
   } catch (err) {
@@ -36,9 +37,7 @@ async function getConnectedClient() {
 }
 
 async function endClientConnection(client) {
-  if (client.length) {
-    await client.end();
-  }
+  await client?.end();
 }
 
 function getSSLConfigs() {

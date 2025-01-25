@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useSWR from "swr";
 
 import UpdatedAt from "../components/UpdatedAt";
@@ -5,27 +6,31 @@ import UpdatedAt from "../components/UpdatedAt";
 import style from "./status.module.css";
 
 function Status() {
+  const [responseSuccess, setResponseSuccess] = useState(false);
+
   const { data, error, isLoading } = useSWR("/api/v1/status", fetcher, {
     refreshInterval: 2000,
   });
 
   async function fetcher(key) {
     const response = await fetch(key);
-    return response.json();
-  }
+    setResponseSuccess(response.ok);
 
-  if (error) {
-    return (
-      <div className={style.statusPage}>
-        <h2>Error while getting status</h2>
-      </div>
-    );
+    return response.json();
   }
 
   if (isLoading) {
     return (
       <div className={style.statusPage}>
         <h2>Loading data...</h2>
+      </div>
+    );
+  }
+
+  if (error || !responseSuccess) {
+    return (
+      <div className={style.statusPage}>
+        <h2>Error while getting status</h2>
       </div>
     );
   }

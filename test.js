@@ -25,11 +25,13 @@ try {
   });
 } catch (err) {
   if (err instanceof ReferenceError) {
-    return console.log(err);
+    console.log(err);
+    return;
   }
 
   if (err instanceof ValidationError) {
-    return console.log(err);
+    console.log(err);
+    return;
   }
 
   console.log(err);

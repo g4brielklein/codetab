@@ -19,20 +19,23 @@ function saveUser(input) {
   user.save(input);
 }
 
-try {
-  saveUser({
-    lastname: "Doe",
-  });
-} catch (err) {
-  if (err instanceof ReferenceError) {
-    console.log(err);
-    return;
-  }
+function processUser() {
+  try {
+    saveUser({
+      name: "John",
+      lastname: "Doe",
+    });
+  } catch (err) {
+    if (err instanceof ReferenceError) {
+      return console.log(err);
+    }
 
-  if (err instanceof ValidationError) {
-    console.log(err);
-    return;
-  }
+    if (err instanceof ValidationError) {
+      return console.log(err);
+    }
 
-  console.log(err);
+    console.log(err);
+  }
 }
+
+processUser();

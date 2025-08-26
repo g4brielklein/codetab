@@ -8,6 +8,8 @@ class ValidationError extends Error {
 }
 
 function saveUser(input) {
+  const user = {};
+
   if (!input) {
     throw new ReferenceError("Input argument is required");
   }

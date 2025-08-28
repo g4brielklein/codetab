@@ -1,13 +1,13 @@
 export class InternalServerError extends Error {
-  constructor(props) {
-    super(props.message || "Internal Server Error", {
-      cause: props.cause,
+  constructor({ cause }) {
+    super("An internal error ocurred", {
+      cause,
     });
 
     this.name = "InternalServerError";
-    this.action =
-      "Try again in a few seconds and then contact the suport team if needed";
-    this.statusCode = props.statusCode || 500;
+    this.message = "An internal error ocurred";
+    this.action = "Contact the support team";
+    this.statusCode = 500;
   }
 
   toJSON() {

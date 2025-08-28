@@ -16,6 +16,7 @@ async function query(queryObject) {
     client = await getConnectedClient(clientOptions);
     return await client.query(queryObject);
   } catch (err) {
+    console.error(err);
     throw err;
   } finally {
     await endClientConnection(client);

@@ -2,6 +2,14 @@ import database from "infra/database.js";
 import { InternalServerError } from "infra/errors.js";
 
 async function status(request, response) {
+  const method = request.method;
+
+  if (method !== "GET") {
+    return response
+      .status(405)
+      .send({ ERROR: `Method ${method} is not allowed on this endpoint` });
+  }
+
   try {
     const updatedAt = new Date().toISOString();
 

@@ -11,16 +11,14 @@ describe("POST /api/v1/status", () => {
         method: "POST",
       });
 
-      expect(response.status).toBe(405);
+      const responseJson = await response.json();
 
-      // const responseJson = await response.json();
-
-      // expect(responseJson).toEqual({
-      //   name: "MethodNotAllowedError",
-      //   message: "Method POST not allowed on endpoint /status",
-      //   action: "Use one of the allowed methods for this endpoint: [GET]",
-      //   status_code: 405,
-      // });
+      expect(responseJson).toEqual({
+        name: "MethodNotAllowedError",
+        message: "Method POST not allowed on endpoint /status",
+        action: "Use one of the allowed methods for this endpoint: [GET]",
+        status_code: 405,
+      });
     });
   });
 });

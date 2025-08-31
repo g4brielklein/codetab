@@ -2,6 +2,7 @@ import { createRouter } from "next-connect";
 import nodePgMigrate from "node-pg-migrate";
 import { resolve } from "node:path";
 import database from "infra/database.js";
+import { InternalServerError } from "infra/errors";
 
 const router = createRouter();
 
@@ -22,9 +23,12 @@ function onNoMatchHandler(request, response) {
   }
 }
 
-function onErrorHandler(err, request, respose) {
-  console.error(err);
-  throw err;
+function onErrorHandler(err, request, response) {
+  const error = new InternalServerError({
+    cause: err,
+  });
+
+  response.status(error.statusCode).json(error);
 }
 
 async function migrations(request, response) {

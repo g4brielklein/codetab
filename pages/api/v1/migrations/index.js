@@ -8,8 +8,19 @@ const router = createRouter();
 router.get(migrations).post(migrations);
 
 export default router.handler({
+  onNoMatch: onNoMatchHandler,
   onError: onErrorHandler,
 });
+
+function onNoMatchHandler(request, response) {
+  const method = request.method;
+
+  if (method !== "POST" && method !== "GET") {
+    return response
+      .status(405)
+      .send({ ERROR: `Method ${method} is not allowed on this endpoint` });
+  }
+}
 
 function onErrorHandler(err, request, respose) {
   console.error(err);
@@ -17,15 +28,8 @@ function onErrorHandler(err, request, respose) {
 }
 
 async function migrations(request, response) {
-  const method = request.method;
   let status = 200;
   let dbClient = null;
-
-  if (method !== "POST" && method !== "GET") {
-    return response
-      .status(405)
-      .send({ ERROR: `Method ${method} is not allowed on this endpoint` });
-  }
 
   try {
     dbClient = await database.getConnectedClient();

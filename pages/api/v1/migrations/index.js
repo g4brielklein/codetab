@@ -1,17 +1,40 @@
+import { createRouter } from "next-connect";
 import nodePgMigrate from "node-pg-migrate";
 import { resolve } from "node:path";
 import database from "infra/database.js";
+import { InternalServerError } from "infra/errors";
 
-export default async function migrations(request, response) {
+const router = createRouter();
+
+router.get(migrations).post(migrations);
+
+export default router.handler({
+  onNoMatch: onNoMatchHandler,
+  onError: onErrorHandler,
+});
+
+function onNoMatchHandler(request, response) {
   const method = request.method;
-  let status = 200;
-  let dbClient = null;
 
   if (method !== "POST" && method !== "GET") {
     return response
       .status(405)
       .send({ ERROR: `Method ${method} is not allowed on this endpoint` });
   }
+}
+
+function onErrorHandler(err, request, response) {
+  const error = new InternalServerError({
+    cause: err,
+  });
+
+  response.status(error.statusCode).json(error);
+}
+
+async function migrations(request, response) {
+  const method = request.method;
+  let status = 200;
+  let dbClient = null;
 
   try {
     dbClient = await database.getConnectedClient();
@@ -47,9 +70,6 @@ export default async function migrations(request, response) {
         (pendingMigration) => pendingMigration.name,
       ),
     });
-  } catch (err) {
-    console.error(err);
-    throw err;
   } finally {
     await database.endClientConnection(dbClient); // close pg-migrate client connection
   }

@@ -32,6 +32,7 @@ function onErrorHandler(err, request, response) {
 }
 
 async function migrations(request, response) {
+  const method = request.method;
   let status = 200;
   let dbClient = null;
 

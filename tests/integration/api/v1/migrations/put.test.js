@@ -2,20 +2,21 @@ import orchestrator from "tests/orchestrator.js";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
+  await orchestrator.cleanDB();
 });
 
-describe("POST /api/v1/status", () => {
+describe("PUT /api/v1/migrations", () => {
   describe("Anonymous user", () => {
-    test("Making a post request", async () => {
-      const response = await fetch("http://localhost:3000/api/v1/status", {
-        method: "POST",
+    test("Running pending migrations", async () => {
+      const response = await fetch("http://localhost:3000/api/v1/migrations", {
+        method: "PUT",
       });
 
       const responseJson = await response.json();
 
       expect(responseJson).toEqual({
         name: "MethodNotAllowedError",
-        message: "Method POST not allowed on endpoint /api/v1/status",
+        message: "Method PUT not allowed on endpoint /api/v1/migrations",
         action: "Use one of the allowed methods for this endpoint",
         status_code: 405,
       });

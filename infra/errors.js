@@ -21,11 +21,11 @@ export class InternalServerError extends Error {
 }
 
 export class MethodNotAllowedError extends Error {
-  constructor({ method, endpoint, allowedMethods }) {
+  constructor({ method, endpoint }) {
     super(`Method ${method} not allowed on endpoint ${endpoint}`);
 
     this.name = "MethodNotAllowedError";
-    this.action = `Use one of the allowed methods for this endpoint: [${allowedMethods}]`;
+    this.action = `Use one of the allowed methods for this endpoint`;
     this.statusCode = 405;
   }
 

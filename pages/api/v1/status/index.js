@@ -1,36 +1,12 @@
 import { createRouter } from "next-connect";
 import database from "infra/database.js";
-import { InternalServerError, MethodNotAllowedError } from "infra/errors.js";
+import controller from "infra/controller.js";
 
 const router = createRouter();
 
 router.get(getHandler);
 
-export default router.handler({
-  onNoMatch: onNoMatchHandler,
-  onError: onErrorHandler,
-});
-
-function onNoMatchHandler(request, response) {
-  const method = request.method;
-
-  const error = new MethodNotAllowedError({
-    method,
-    endpoint: "/status",
-    allowedMethods: ["GET"],
-  });
-
-  response.status(error.statusCode).json(error);
-}
-
-function onErrorHandler(err, request, response) {
-  const error = new InternalServerError({
-    cause: err,
-  });
-
-  console.error(error);
-  response.status(error.statusCode).json(error);
-}
+export default router.handler(controller.errorHandlers);
 
 async function getHandler(request, response) {
   const updatedAt = new Date().toISOString();
